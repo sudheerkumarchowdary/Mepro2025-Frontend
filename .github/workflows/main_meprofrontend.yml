@@ -62,3 +62,4 @@ jobs:
           app-name: 'meprofrontend'
           slot-name: 'Production'
           package: './react-build'
+  
