@@ -1,0 +1,167 @@
+/* General Layout */
+.landing-container {
+  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  margin: 0;
+  background: #f9f9f9;
+  color: #222;
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #673ab7, #3f51b5);
+  color: white;
+  position: relative; /* Added for logo positioning */
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons button {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: #3f51b5;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.hero-buttons .outline {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.hero-buttons button:hover {
+  transform: scale(1.05);
+}
+
+/* Logo Styles */
+.logo-container {
+  position: absolute;
+  top: 1rem; /* Adjusted to fit within hero padding */
+  left: 2rem;
+  right: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-left {
+  text-align: left;
+}
+
+.logo-right {
+  text-align: right;
+}
+
+.cinepreneur-logo,
+.meeschool-logo {
+  height: 80px; /* Adjust size as needed */
+  width: 200px;
+  object-fit: contain;
+}
+
+/* Segments */
+.segments {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 3rem 2rem;
+}
+
+.segment-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: 0.3s ease;
+}
+
+.segment-card:hover {
+  transform: translateY(-5px);
+}
+
+.segment-card h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #3f51b5;
+}
+
+.segment-card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.segment-card li {
+  margin-bottom: 0.5rem;
+}
+
+.deep-dive {
+  background: #3f51b5;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.deep-dive:hover {
+  background: #2c387e;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  background: #eeeeee;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero {
+      padding: 3rem 1rem;
+  }
+
+  .logo-container {
+      top: 0.5rem;
+      left: 1rem;
+      right: 1rem;
+  }
+
+  .cinepreneur-logo,
+  .meeschool-logo {
+      height: 40px;
+  }
+
+  .hero h1 {
+      font-size: 2rem;
+  }
+
+  .hero p {
+      font-size: 1rem;
+  }
+
+  .segments {
+      padding: 2rem 1rem;
+  }
+
+  .segment-card {
+      padding: 1.5rem;
+  }
+}

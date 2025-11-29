@@ -1,0 +1,146 @@
+.pitch-upload-container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px 20px;
+  background: #fff;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.pitch-upload-container h1 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 15px;
+  margin-bottom: 30px;
+}
+
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.category-tabs button {
+  flex: 1 1 45%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  min-width: 140px;
+}
+
+.category-tabs .active {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.upload-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #333;
+}
+
+.upload-form input[type='file'],
+.upload-form textarea {
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.upload-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.submit-btn {
+  background: #28a745;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #218838;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 480px) {
+  .pitch-upload-container {
+    padding: 20px 16px;
+    margin: 30px 10px;
+  }
+
+  .category-tabs button {
+    flex: 1 1 100%;
+  }
+
+  .pitch-upload-container h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.home-btn {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.download-link {
+  margin: 1rem 0;
+}
+
+.download-link a {
+  color: white;
+  text-decoration: none;
+}
+
+.download-link a:hover {
+  color: #0056b3;
+  background-color: whitesmoke;
+  font-weight: bold;
+}
+.download-btn {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  background-color: #007bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.download-btn:hover {
+  background-color: #0056b3;
+}
