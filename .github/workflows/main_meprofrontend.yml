@@ -20,20 +20,26 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Install and build (repo root)
+      - name: Install and build
         env:
           CI: 'false'
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
         run: |
           npm ci
           npm run build
-          cp web.config build/
 
-      - name: Upload build artifact
+      - name: Prepare deployment package
+        run: |
+          mkdir deployment
+          cp -r build deployment/
+          cp server.js deployment/
+          cp package*.json deployment/
+          cd deployment && npm ci --only=production
+
+      - name: Upload deployment artifact
         uses: actions/upload-artifact@v4
         with:
           name: react-build
-          path: build
+          path: deployment
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,4 +68,3 @@ jobs:
           app-name: 'meprofrontend'
           slot-name: 'Production'
           package: './react-build'
-  
