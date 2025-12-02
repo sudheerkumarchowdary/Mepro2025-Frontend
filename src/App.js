@@ -1,6 +1,6 @@
 import './App.css';
 import LandingPage from './LandingPage/LandingPage';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 // import RegistrationPage from './Regstration/RegistrationPage';
 import LoginPage from './Login/LoginPage';
 import { ToastContainer } from "react-toastify";
@@ -15,7 +15,7 @@ function App() {
     <ToastContainer position="top-right" autoClose={3000} />
       <BrowserRouter>
         <Routes>
-            <Route path='/' element={<Navigate to="/login" replace />}/>
+            <Route path='/' element={<LandingPage/>}/>
             <Route path='/register' element={<RegistrationPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/home' element={<LandingPage/>}/>

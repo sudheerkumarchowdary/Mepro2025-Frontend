@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './LandingPage.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,9 +37,62 @@ const segments = [
 
 const LandingPage = () => {
   const nav = useNavigate();
-  const handleClick = () => {
-    nav('/login');
-  }
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check login status from localStorage
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+
+    if (token && storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsLoggedIn(true);
+      } catch (err) {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Clear auth data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsLoggedIn(false);
+    alert('You have been logged out.');
+    nav('/');
+  };
+
+  const requireLogin = (cb) => {
+    if (!isLoggedIn) {
+      alert('Please login to access this feature.');
+      nav('/login');
+      return;
+    }
+    if (typeof cb === 'function') {
+      cb();
+    }
+  };
+
+  const getUserDisplayName = () => {
+    if (!user) return '';
+    return (
+      user.name ||
+      user.fullName ||
+      user.firstName ||
+      user.username ||
+      user.email ||
+      ''
+    );
+  };
+
   return (
     <div className="landing-container">
       <header className="hero">
@@ -53,9 +106,29 @@ const LandingPage = () => {
         </div>
         <h1>🎬 Media & Entertainment Marketplace</h1>
         <p>Empowering Creators, Professionals, and Innovators</p>
+        {isLoggedIn && (
+          <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <span style={{ fontWeight: 'bold' }}>Welcome, {getUserDisplayName()}</span>
+            <button className="outline" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        )}
         <div className="hero-buttons">
-          <button onClick={() => handleClick()}>Login to Get Started</button>
-          <button className="outline">Explore Segments</button>
+          {!isLoggedIn && (
+            <button onClick={() => nav('/login')}>Login to Get Started</button>
+          )}
+          <button
+            className="outline"
+            onClick={() => {
+              if (!isLoggedIn) {
+                alert('Please login to explore segments.');
+                nav('/login');
+              }
+            }}
+          >
+            Explore Segments
+          </button>
         </div>
       </header>
 
@@ -65,27 +138,27 @@ const LandingPage = () => {
 
           const handleDoubleClick = () => {
             if (isPitching) {
-              // Check if user is logged in and is talent
-              const token = localStorage.getItem('token');
-              const storedUser = localStorage.getItem('user');
-
-              if (!token || !storedUser) {
-                alert('Please login as a talent user to upload pitches');
-                nav('/login', { state: { from: '/pitch-upload' } });
-                return;
-              }
-
-              try {
-                const userData = JSON.parse(storedUser);
-                if (userData.userType !== 'talent') {
-                  alert('Only talent users can upload pitches. Recruiters can view pitches.');
-                  nav('/producer-pitches');
+              requireLogin(() => {
+                // Check if user is talent
+                const storedUser = localStorage.getItem('user');
+                if (!storedUser) {
+                  nav('/login', { state: { from: '/pitch-upload' } });
                   return;
                 }
-                nav('/pitch-upload');
-              } catch (err) {
-                nav('/login');
-              }
+                try {
+                  const userData = JSON.parse(storedUser);
+                  if (userData.userType !== 'talent') {
+                    alert('Only talent users can upload pitches. Recruiters can view pitches.');
+                    nav('/producer-pitches');
+                    return;
+                  }
+                  nav('/pitch-upload');
+                } catch (err) {
+                  nav('/login');
+                }
+              });
+            } else {
+              requireLogin();
             }
           };
 
@@ -93,7 +166,7 @@ const LandingPage = () => {
             <div
               key={index}
               className="segment-card"
-              {...(isPitching ? { onClick: handleDoubleClick } : {})}
+              onClick={handleDoubleClick}
             >
               <h2>{segment.title}</h2>
               <p>{segment.description}</p>
@@ -104,15 +177,56 @@ const LandingPage = () => {
               </ul>
               {isPitching && (
                 <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-                  <button className="deep-dive" onClick={(e) => { e.stopPropagation(); nav('/pitch-upload'); }}>
+                  <button
+                    className="deep-dive"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      requireLogin(() => {
+                        const storedUser = localStorage.getItem('user');
+                        if (!storedUser) {
+                          nav('/login', { state: { from: '/pitch-upload' } });
+                          return;
+                        }
+                        try {
+                          const userData = JSON.parse(storedUser);
+                          if (userData.userType !== 'talent') {
+                            alert('Only talent users can upload pitches. Recruiters can view pitches.');
+                            nav('/producer-pitches');
+                            return;
+                          }
+                          nav('/pitch-upload');
+                        } catch (err) {
+                          nav('/login');
+                        }
+                      });
+                    }}
+                  >
                     Upload Pitch
                   </button>
-                  <button className="deep-dive" onClick={(e) => { e.stopPropagation(); nav('/producer-pitches'); }}>
+                  <button
+                    className="deep-dive"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      requireLogin(() => {
+                        nav('/producer-pitches');
+                      });
+                    }}
+                  >
                     View All Pitches
                   </button>
                 </div>
               )}
-              {!isPitching && <button className="deep-dive">Explore More</button>}
+              {!isPitching && (
+                <button
+                  className="deep-dive"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    requireLogin();
+                  }}
+                >
+                  Explore More
+                </button>
+              )}
             </div>
           );
         })}
