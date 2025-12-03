@@ -92,6 +92,10 @@ const ProfilingPage = () => {
               <input type="tel" placeholder="Contact number" />
             </div>
             <div className="form-row">
+              <label>Email</label>
+              <input type="email" placeholder="Your email address" />
+            </div>
+            <div className="form-row">
               <label>Profile Upload</label>
               <input type="file" />
             </div>
