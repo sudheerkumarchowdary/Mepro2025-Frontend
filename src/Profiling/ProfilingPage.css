@@ -15,6 +15,12 @@
   color: #fff;
 }
 
+.profiling-header-left,
+.profiling-header-right {
+  display: flex;
+  align-items: center;
+}
+
 .profiling-header-center h1 {
   margin: 0;
   font-size: 1.8rem;
@@ -25,15 +31,14 @@
   opacity: 0.9;
 }
 
-.logo-placeholder {
-  width: 80px;
+/* Reuse logo sizing similar to landing page */
+.cinepreneur-logo {
+  height: 48px;
+  border-radius: 8px;
+}
+
+.meeschool-logo {
   height: 40px;
-  border-radius: 6px;
-  border: 1px dashed rgba(255, 255, 255, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
 }
 
 .profiling-layout {

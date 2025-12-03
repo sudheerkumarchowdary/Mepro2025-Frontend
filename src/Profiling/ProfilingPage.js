@@ -29,14 +29,14 @@ const ProfilingPage = () => {
       {/* Header */}
       <header className="profiling-header">
         <div className="profiling-header-left">
-          <div className="logo-placeholder">Logo</div>
+          <img src="/p3.jpg" alt="Cinepreneur Logo" className="cinepreneur-logo" />
         </div>
         <div className="profiling-header-center">
           <h1>M &amp; E Marketplace</h1>
           <p>Empowering creators, professionals</p>
         </div>
         <div className="profiling-header-right">
-          <div className="logo-placeholder">Logo</div>
+          <img src="/p1.jpg" alt="MeeSchool Logo" className="meeschool-logo" />
         </div>
       </header>
 
