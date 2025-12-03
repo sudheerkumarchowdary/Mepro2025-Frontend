@@ -158,7 +158,11 @@ const LandingPage = () => {
                 }
               });
             } else {
-              requireLogin();
+              if (segment.title === 'Profiling') {
+                requireLogin(() => nav('/profiling'));
+              } else {
+                requireLogin();
+              }
             }
           };
 
@@ -221,7 +225,11 @@ const LandingPage = () => {
                   className="deep-dive"
                   onClick={(e) => {
                     e.stopPropagation();
-                    requireLogin();
+                    if (segment.title === 'Profiling') {
+                      requireLogin(() => nav('/profiling'));
+                    } else {
+                      requireLogin();
+                    }
                   }}
                 >
                   Explore More

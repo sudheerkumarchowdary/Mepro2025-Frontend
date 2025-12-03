@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PitchUploadPage from './Pitching/PitchUploadPage';
 import ProducerPitchesPage from './Pitching/ProducerPitchesPage';
 import RegistrationPage from './Registration/RegistrationPage';
+import ProfilingPage from './Profiling/ProfilingPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path='/register' element={<RegistrationPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/home' element={<LandingPage/>}/>
+            <Route path='/profiling' element={<ProfilingPage/>}/>
             {/* <Route path='/register' element={<RegistrationPage/>}/> */}
             <Route path='/pitch-upload' element={<PitchUploadPage/>}/>
             <Route path='/producer-pitches' element={<ProducerPitchesPage/>}/>
