@@ -6,11 +6,13 @@ import API_BASE_URL from '../config';
 const ProfilePage = () => {
   const [profile, setProfile] = useState({
     name: '',
-    bio: '',
-    expertise: '',
-    experience: '',
-    skills: '',
-    portfolioUrl: '',
+    company: '',
+    education: '',
+    phone: '',
+    occupation: '',
+    designation: '',
+    skill: '',
+    cityLocation: '',
     profileImageUrl: '',
     resumeUrl: '',
     isPremium: false,
@@ -59,11 +61,13 @@ const ProfilePage = () => {
         if (data.profile) {
           setProfile({
             name: data.profile.Name || '',
-            bio: data.profile.Bio || '',
-            expertise: data.profile.Expertise || '',
-            experience: data.profile.Experience || '',
-            skills: data.profile.Skills || '',
-            portfolioUrl: data.profile.PortfolioUrl || '',
+            company: data.profile.Company || '',
+            education: data.profile.Education || '',
+            phone: data.profile.Phone || '',
+            occupation: data.profile.Occupation || '',
+            designation: data.profile.Designation || '',
+            skill: data.profile.Skill || '',
+            cityLocation: data.profile.CityLocation || '',
             profileImageUrl: data.profile.ProfileImageUrl || '',
             resumeUrl: data.profile.ResumeUrl || '',
             isPremium: data.profile.IsPremium || false,
@@ -195,161 +199,160 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="profile-container">
-      <button className="home-btn" onClick={() => navigate('/')}>🏠 Home</button>
-
-      <h1>👤 Create Your Professional Profile</h1>
-      <p className="subtitle">Showcase your expertise and build your professional presence</p>
-
-      <form className="profile-form" onSubmit={handleSubmit}>
-        <div className="form-section">
-          <h2>Basic Information</h2>
-          
-          <label>
-            Name *
-            <input
-              type="text"
-              name="name"
-              value={profile.name}
-              onChange={handleInputChange}
-              placeholder="Your full name"
-              required
-            />
-          </label>
-
-          <label>
-            Bio
-            <textarea
-              name="bio"
-              value={profile.bio}
-              onChange={handleInputChange}
-              placeholder="Tell us about yourself..."
-              rows="4"
-            />
-          </label>
-
-          <label>
-            Expertise
-            <textarea
-              name="expertise"
-              value={profile.expertise}
-              onChange={handleInputChange}
-              placeholder="Your areas of expertise..."
-              rows="3"
-            />
-          </label>
-
-          <label>
-            Experience
-            <textarea
-              name="experience"
-              value={profile.experience}
-              onChange={handleInputChange}
-              placeholder="Your professional experience..."
-              rows="4"
-            />
-          </label>
-
-          <label>
-            Skills
-            <input
-              type="text"
-              name="skills"
-              value={profile.skills}
-              onChange={handleInputChange}
-              placeholder="Comma-separated skills (e.g., Acting, Directing, Writing)"
-            />
-          </label>
-
-          <label>
-            Portfolio URL
-            <input
-              type="url"
-              name="portfolioUrl"
-              value={profile.portfolioUrl}
-              onChange={handleInputChange}
-              placeholder="https://yourportfolio.com"
-            />
-          </label>
+    <div className="marketplace-container">
+      {/* Header */}
+      <header className="marketplace-header">
+        <div className="logo-left">LOGO</div>
+        <div className="header-content">
+          <h1 className="marketplace-title">M&E MARKETPLACE</h1>
+          <p className="marketplace-subtitle">EMPOWERING CREATORS, PROFESSIONALS</p>
         </div>
+        <div className="logo-right">LOGO</div>
+      </header>
 
-        <div className="form-section">
-          <h2>Files & Documents</h2>
+      <div className="marketplace-body">
+        {/* Left Navigation Sidebar */}
+        <nav className="sidebar-nav">
+          <div className="nav-item active">PROFILING</div>
+          <div className="nav-item" onClick={() => navigate('/')}>LEARNING / CERTIFICATION</div>
+          <div className="nav-item" onClick={() => navigate('/pitch-upload')}>PITCHING</div>
+          <div className="nav-item">
+            VALIDATE
+            <div className="nav-subitem">PROOF OF CONCEPTS</div>
+          </div>
+          <div className="nav-item">
+            SOURCING
+            <div className="nav-subitem">TALENT/EQUIPMENT</div>
+          </div>
+          <div className="nav-item" onClick={() => navigate('/')}>FUNDING ZONE</div>
+        </nav>
 
-          <label>
-            Profile Image
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProfileImage(e.target.files[0])}
-            />
-            {profile.profileImageUrl && (
-              <div className="file-preview">
-                <p>Current: <a href={profile.profileImageUrl} target="_blank" rel="noopener noreferrer">View Image</a></p>
+        {/* Main Content Area */}
+        <main className="main-content">
+          <form className="profile-form" onSubmit={handleSubmit}>
+            <div className="form-row">
+              {/* Left Column */}
+              <div className="form-column">
+                <label>
+                  NAME
+                  <input
+                    type="text"
+                    name="name"
+                    value={profile.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  COMPANY
+                  <input
+                    type="text"
+                    name="company"
+                    value={profile.company}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  EDUCATION
+                  <input
+                    type="text"
+                    name="education"
+                    value={profile.education}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  PHONE #
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={profile.phone}
+                    onChange={handleInputChange}
+                  />
+                </label>
               </div>
-            )}
-          </label>
 
-          <label>
-            Resume/CV
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx"
-              onChange={(e) => setResume(e.target.files[0])}
-            />
-            {profile.resumeUrl && (
-              <div className="file-preview">
-                <p>Current: <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">View Resume</a></p>
+              {/* Right Column */}
+              <div className="form-column">
+                <label>
+                  OCCUPATION
+                  <input
+                    type="text"
+                    name="occupation"
+                    value={profile.occupation}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  DESIGNATION
+                  <input
+                    type="text"
+                    name="designation"
+                    value={profile.designation}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  SKILL
+                  <input
+                    type="text"
+                    name="skill"
+                    value={profile.skill}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  CITY/LOCATION
+                  <input
+                    type="text"
+                    name="cityLocation"
+                    value={profile.cityLocation}
+                    onChange={handleInputChange}
+                  />
+                </label>
+
+                <label>
+                  PROFILE UPLOAD
+                  <input
+                    type="file"
+                    accept="image/*,.pdf,.doc,.docx"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        if (file.type.startsWith('image/')) {
+                          setProfileImage(file);
+                        } else {
+                          setResume(file);
+                        }
+                      }
+                    }}
+                  />
+                  {profile.profileImageUrl && (
+                    <div className="file-preview">
+                      <small>Current image uploaded</small>
+                    </div>
+                  )}
+                </label>
               </div>
-            )}
-          </label>
+            </div>
 
-          <label>
-            Other Files (Portfolio, Samples, etc.)
-            <input
-              type="file"
-              multiple
-              onChange={(e) => setOtherFiles(Array.from(e.target.files))}
-            />
-            {otherFiles.length > 0 && (
-              <div className="file-preview">
-                <p>{otherFiles.length} file(s) selected</p>
-              </div>
-            )}
-          </label>
-        </div>
+            <button type="submit" className="submit-btn">SUBMIT</button>
+          </form>
 
-        <div className="form-section">
-          <h2>Profile Settings</h2>
+          {uploadStatus && <p className="status-message">{uploadStatus}</p>}
+        </main>
+      </div>
 
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="isPremium"
-              checked={profile.isPremium}
-              onChange={handleInputChange}
-            />
-            Premium Profile (Enhanced visibility)
-          </label>
-
-          <label>
-            Visibility Level
-            <select
-              name="visibilityLevel"
-              value={profile.visibilityLevel}
-              onChange={handleInputChange}
-            >
-              <option value="standard">Standard</option>
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-            </select>
-          </label>
-        </div>
-
-        <button type="submit" className="submit-btn">Save Profile</button>
-      </form>
-
-      {uploadStatus && <p className="status-message">{uploadStatus}</p>}
+      {/* Footer */}
+      <footer className="marketplace-footer">
+        <p>© MEESCHOOL, 2025</p>
+      </footer>
     </div>
   );
 };
