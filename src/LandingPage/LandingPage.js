@@ -135,6 +135,7 @@ const LandingPage = () => {
       <section className="segments">
         {segments.map((segment, index) => {
           const isPitching = segment.title === 'Pitching';
+          const isProfiling = segment.title === 'Profiling';
 
           const handleDoubleClick = () => {
             if (isPitching) {
@@ -157,12 +158,12 @@ const LandingPage = () => {
                   nav('/login');
                 }
               });
+            } else if (isProfiling) {
+              requireLogin(() => {
+                nav('/profile');
+              });
             } else {
-              if (segment.title === 'Profiling') {
-                requireLogin(() => nav('/profiling'));
-              } else {
-                requireLogin();
-              }
+              requireLogin();
             }
           };
 
@@ -220,16 +221,25 @@ const LandingPage = () => {
                   </button>
                 </div>
               )}
-              {!isPitching && (
+              {isProfiling && (
                 <button
                   className="deep-dive"
                   onClick={(e) => {
                     e.stopPropagation();
-                    if (segment.title === 'Profiling') {
-                      requireLogin(() => nav('/profiling'));
-                    } else {
-                      requireLogin();
-                    }
+                    requireLogin(() => {
+                      nav('/profile');
+                    });
+                  }}
+                >
+                  Create/Edit Profile
+                </button>
+              )}
+              {!isPitching && !isProfiling && (
+                <button
+                  className="deep-dive"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    requireLogin();
                   }}
                 >
                   Explore More
