@@ -19,10 +19,16 @@
 
 .logo-left,
 .logo-right {
-  font-size: 18px;
-  font-weight: bold;
-  color: #666;
-  min-width: 80px;
+  min-width: 200px;
+  display: flex;
+  align-items: center;
+}
+
+.cinepreneur-logo,
+.meeschool-logo {
+  height: 80px;
+  width: 200px;
+  object-fit: contain;
 }
 
 .header-content {

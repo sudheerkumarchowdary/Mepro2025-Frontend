@@ -6,6 +6,7 @@ import API_BASE_URL from '../config';
 const ProfilePage = () => {
   const [profile, setProfile] = useState({
     name: '',
+    email: '',
     company: '',
     education: '',
     phone: '',
@@ -61,6 +62,7 @@ const ProfilePage = () => {
         if (data.profile) {
           setProfile({
             name: data.profile.Name || '',
+            email: data.profile.Email || '',
             company: data.profile.Company || '',
             education: data.profile.Education || '',
             phone: data.profile.Phone || '',
@@ -202,12 +204,16 @@ const ProfilePage = () => {
     <div className="marketplace-container">
       {/* Header */}
       <header className="marketplace-header">
-        <div className="logo-left">LOGO</div>
+        <div className="logo-left">
+          <img src="/p3.jpg" alt="Cinepreneur Logo" className="cinepreneur-logo" />
+        </div>
         <div className="header-content">
           <h1 className="marketplace-title">M&E MARKETPLACE</h1>
           <p className="marketplace-subtitle">EMPOWERING CREATORS, PROFESSIONALS</p>
         </div>
-        <div className="logo-right">LOGO</div>
+        <div className="logo-right">
+          <img src="/p1.jpg" alt="MeeSchool Logo" className="meeschool-logo" />
+        </div>
       </header>
 
       <div className="marketplace-body">
@@ -239,6 +245,17 @@ const ProfilePage = () => {
                     type="text"
                     name="name"
                     value={profile.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </label>
+
+                <label>
+                  EMAIL
+                  <input
+                    type="email"
+                    name="email"
+                    value={profile.email}
                     onChange={handleInputChange}
                     required
                   />
