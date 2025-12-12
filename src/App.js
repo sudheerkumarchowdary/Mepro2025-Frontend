@@ -9,6 +9,7 @@ import PitchUploadPage from './Pitching/PitchUploadPage';
 import ProducerPitchesPage from './Pitching/ProducerPitchesPage';
 import RegistrationPage from './Registration/RegistrationPage';
 import ProfilePage from './Profiling/ProfilePage';
+import ProfilesListPage from './Profiling/ProfilesListPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path='/pitch-upload' element={<PitchUploadPage/>}/>
             <Route path='/producer-pitches' element={<ProducerPitchesPage/>}/>
             <Route path='/profile' element={<ProfilePage/>}/>
+            <Route path='/profiles' element={<ProfilesListPage/>}/>
         </Routes>
       </BrowserRouter>
     </>

@@ -160,7 +160,22 @@ const LandingPage = () => {
               });
             } else if (isProfiling) {
               requireLogin(() => {
-                nav('/profile');
+                const storedUser = localStorage.getItem('user');
+                if (storedUser) {
+                  try {
+                    const userData = JSON.parse(storedUser);
+                    // Recruiters go to profiles list, talent goes to profile form
+                    if (userData.userType === 'recruiter') {
+                      nav('/profiles');
+                    } else {
+                      nav('/profile');
+                    }
+                  } catch (err) {
+                    nav('/profile');
+                  }
+                } else {
+                  nav('/profile');
+                }
               });
             } else {
               requireLogin();

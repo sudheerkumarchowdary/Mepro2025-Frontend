@@ -25,7 +25,6 @@ const ProfilePage = () => {
   const [uploadStatus, setUploadStatus] = useState('');
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [profilesList, setProfilesList] = useState([]); // For recruiters
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,14 +40,16 @@ const ProfilePage = () => {
 
     try {
       const userData = JSON.parse(storedUser);
-      setUser(userData);
       
-      // If recruiter, fetch all profiles; if talent, fetch their own profile
+      // If recruiter, redirect to profiles list page
       if (userData.userType === 'recruiter') {
-        fetchAllProfiles();
-      } else {
-        fetchProfile(token);
+        navigate('/profiles');
+        return;
       }
+      
+      // Talent users can create/edit their profile
+      setUser(userData);
+      fetchProfile(token);
     } catch (err) {
       console.error('Error parsing user data:', err);
       navigate('/login');
@@ -95,25 +96,6 @@ const ProfilePage = () => {
     }
   };
 
-  const fetchAllProfiles = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/profiles`);
-
-      if (res.ok) {
-        const data = await res.json();
-        setProfilesList(data.profiles || []);
-      } else {
-        console.error('Failed to fetch profiles:', data.error);
-        alert('Failed to load profiles: ' + (data.error || 'Unknown error'));
-      }
-    } catch (err) {
-      console.error('Error fetching profiles:', err);
-      alert('Failed to load profiles');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -145,7 +127,16 @@ const ProfilePage = () => {
         body: formData,
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        console.error('Error parsing JSON response:', jsonErr);
+        alert('❌ Upload failed: Invalid response from server');
+        setUploadStatus('Upload failed.');
+        return;
+      }
+
       if (res.ok) {
         setUploadStatus(`✅ ${fileType} uploaded successfully!`);
         
@@ -161,7 +152,7 @@ const ProfilePage = () => {
           fetchProfile(token);
         }
       } else {
-        alert(`❌ Upload failed: ${data.error || 'Unknown error'}`);
+        alert(`❌ Upload failed: ${data?.error || 'Unknown error'}`);
         setUploadStatus('Upload failed.');
       }
     } catch (err) {
@@ -192,7 +183,16 @@ const ProfilePage = () => {
         body: JSON.stringify(profile),
       });
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (jsonErr) {
+        console.error('Error parsing JSON response:', jsonErr);
+        alert('❌ Save failed: Invalid response from server');
+        setUploadStatus('Save failed.');
+        return;
+      }
+
       if (res.ok) {
         setUploadStatus('✅ Profile saved successfully!');
         
@@ -210,7 +210,7 @@ const ProfilePage = () => {
           setOtherFiles([]);
         }
       } else {
-        alert(`❌ Save failed: ${data.error || 'Unknown error'}`);
+        alert(`❌ Save failed: ${data?.error || 'Unknown error'}`);
         setUploadStatus('Save failed.');
       }
     } catch (err) {
@@ -228,102 +228,20 @@ const ProfilePage = () => {
     );
   }
 
-  // Render profiles list for recruiters
-  if (user && user.userType === 'recruiter') {
+  // Only talent users should see the profile form
+  if (!user || user.userType !== 'talent') {
     return (
       <div className="marketplace-container">
-        {/* Header */}
-        <header className="marketplace-header">
-          <div className="logo-left">
-            <img src="/p3.jpg" alt="Cinepreneur Logo" className="cinepreneur-logo" />
-          </div>
-          <div className="header-content">
-            <h1 className="marketplace-title">M&E MARKETPLACE</h1>
-            <p className="marketplace-subtitle">EMPOWERING CREATORS, PROFESSIONALS</p>
-          </div>
-          <div className="logo-right">
-            <img src="/p1.jpg" alt="MeeSchool Logo" className="meeschool-logo" />
-          </div>
-        </header>
-
-        <div className="marketplace-body">
-          {/* Left Navigation Sidebar */}
-          <nav className="sidebar-nav">
-            <div className="nav-item active">PROFILING</div>
-            <div className="nav-item" onClick={() => navigate('/')}>LEARNING / CERTIFICATION</div>
-            <div className="nav-item" onClick={() => navigate('/producer-pitches')}>PITCHING</div>
-            <div className="nav-item">
-              VALIDATE
-              <div className="nav-subitem">PROOF OF CONCEPTS</div>
-            </div>
-            <div className="nav-item">
-              SOURCING
-              <div className="nav-subitem">TALENT/EQUIPMENT</div>
-            </div>
-            <div className="nav-item" onClick={() => navigate('/')}>FUNDING ZONE</div>
-          </nav>
-
-          {/* Main Content Area - Profiles List */}
-          <main className="main-content">
-            <h2 style={{ marginBottom: '20px', fontSize: '24px', color: '#333' }}>PROFILES</h2>
-            
-            {profilesList.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
-                <p>No profiles found.</p>
-              </div>
-            ) : (
-              <div className="profiles-grid">
-                {profilesList.map((profile, index) => (
-                  <div key={profile.Id || index} className="profile-card">
-                    {profile.ProfileImageUrl && (
-                      <div className="profile-image-container">
-                        <img 
-                          src={profile.ProfileImageUrl} 
-                          alt={`${profile.Name || 'Profile'}`}
-                          className="profile-image"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                          }}
-                        />
-                      </div>
-                    )}
-                    <div className="profile-info">
-                      <h3 className="profile-name">{profile.Name || 'N/A'}</h3>
-                      <p className="profile-email">{profile.Email || profile.UserEmail || 'N/A'}</p>
-                      {profile.Company && <p className="profile-detail"><strong>Company:</strong> {profile.Company}</p>}
-                      {profile.Occupation && <p className="profile-detail"><strong>Occupation:</strong> {profile.Occupation}</p>}
-                      {profile.Designation && <p className="profile-detail"><strong>Designation:</strong> {profile.Designation}</p>}
-                      {profile.Skill && <p className="profile-detail"><strong>Skill:</strong> {profile.Skill}</p>}
-                      {profile.CityLocation && <p className="profile-detail"><strong>Location:</strong> {profile.CityLocation}</p>}
-                      {profile.Education && <p className="profile-detail"><strong>Education:</strong> {profile.Education}</p>}
-                      {profile.Phone && <p className="profile-detail"><strong>Phone:</strong> {profile.Phone}</p>}
-                      {profile.ResumeUrl && (
-                        <a 
-                          href={profile.ResumeUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="resume-link"
-                        >
-                          📄 View Resume
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </main>
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
+          <h2>Access Denied</h2>
+          <p>Only talent users can create/edit profiles.</p>
+          <p>Recruiters can view profiles in the <a href="/profiles" style={{ color: '#007bff' }}>Profiles</a> section.</p>
         </div>
-
-        {/* Footer */}
-        <footer className="marketplace-footer">
-          <p>© MEESCHOOL, 2025</p>
-        </footer>
       </div>
     );
   }
 
-  // Render profile form for talent users
+  return (
   return (
     <div className="marketplace-container">
       {/* Header */}
