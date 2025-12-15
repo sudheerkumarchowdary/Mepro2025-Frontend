@@ -242,7 +242,6 @@ const ProfilePage = () => {
   }
 
   return (
-  return (
     <div className="marketplace-container">
       {/* Header */}
       <header className="marketplace-header">
