@@ -47,6 +47,7 @@ const ProfilesListPage = () => {
         const data = await res.json();
         setProfilesList(data.profiles || []);
       } else {
+        const data = await res.json().catch(() => ({}));
         console.error('Failed to fetch profiles:', data.error);
         alert('Failed to load profiles: ' + (data.error || 'Unknown error'));
       }
