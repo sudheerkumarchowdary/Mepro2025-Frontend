@@ -9,6 +9,27 @@ const ProfilesListPage = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  // Helper function to get file type from URL
+  const getFileType = (url) => {
+    if (!url) return null;
+    const fileName = url.split('/').pop().split('?')[0].toLowerCase();
+    if (fileName.endsWith('.pdf')) return 'pdf';
+    if (fileName.endsWith('.jpg') || fileName.endsWith('.jpeg')) return 'image';
+    if (fileName.endsWith('.png')) return 'image';
+    if (fileName.endsWith('.gif')) return 'image';
+    if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) return 'document';
+    return 'file';
+  };
+
+  // Helper function to get resume icon based on file type
+  const getResumeIcon = (url) => {
+    const fileType = getFileType(url);
+    if (fileType === 'pdf') return '📄';
+    if (fileType === 'image') return '🖼️';
+    if (fileType === 'document') return '📝';
+    return '📎';
+  };
+
   useEffect(() => {
     // Check if user is logged in and is recruiter
     const token = localStorage.getItem('token');
@@ -142,7 +163,7 @@ const ProfilesListPage = () => {
                         rel="noopener noreferrer"
                         className="resume-link"
                       >
-                        📄 View Resume
+                        {getResumeIcon(profile.ResumeUrl)} View Resume
                       </a>
                     )}
                   </div>
