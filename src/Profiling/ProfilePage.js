@@ -376,24 +376,39 @@ const ProfilePage = () => {
                 </label>
 
                 <label>
-                  PROFILE UPLOAD
+                  PROFILE IMAGE
                   <input
                     type="file"
-                    accept="image/*,.pdf,.doc,.docx"
+                    accept="image/*"
                     onChange={(e) => {
                       const file = e.target.files[0];
                       if (file) {
-                        if (file.type.startsWith('image/')) {
-                          setProfileImage(file);
-                        } else {
-                          setResume(file);
-                        }
+                        setProfileImage(file);
                       }
                     }}
                   />
                   {profile.profileImageUrl && (
                     <div className="file-preview">
                       <small>Current image uploaded</small>
+                    </div>
+                  )}
+                </label>
+
+                <label>
+                  RESUME (PDF, JPG, PNG, DOC, DOCX)
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setResume(file);
+                      }
+                    }}
+                  />
+                  {profile.resumeUrl && (
+                    <div className="file-preview">
+                      <small>Current resume uploaded</small>
                     </div>
                   )}
                 </label>
