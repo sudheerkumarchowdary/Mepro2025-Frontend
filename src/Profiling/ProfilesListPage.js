@@ -107,6 +107,7 @@ const ProfilesListPage = () => {
       <div className="marketplace-body">
         {/* Left Navigation Sidebar */}
         <nav className="sidebar-nav">
+          <div className="nav-item" onClick={() => navigate('/')}>HOME</div>
           {/* Recruiters see "PROFILES" instead of "PROFILING" like users do */}
           <div className="nav-item active">PROFILES</div>
           <div className="nav-item" onClick={() => navigate('/')}>LEARNING / CERTIFICATION</div>
