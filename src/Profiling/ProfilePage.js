@@ -260,6 +260,7 @@ const ProfilePage = () => {
       <div className="marketplace-body">
         {/* Left Navigation Sidebar */}
         <nav className="sidebar-nav">
+          <div className="nav-item" onClick={() => navigate('/')}>HOME</div>
           <div className="nav-item active">PROFILING</div>
           <div className="nav-item" onClick={() => navigate('/')}>LEARNING / CERTIFICATION</div>
           <div className="nav-item" onClick={() => navigate('/pitch-upload')}>PITCHING</div>
